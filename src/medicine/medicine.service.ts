@@ -56,7 +56,7 @@ export class MedicineService {
 
       const jsonData: any[] = XLSX.utils.sheet_to_json(worksheet, { header: 1 });
 
-      const medicines = jsonData.slice(4).map((row) => ({
+      const medicines = jsonData.slice(3).map((row) => ({
         name: row[0],
         status: row[6],
       })).filter(item => item.name && item.status);
