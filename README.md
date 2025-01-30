@@ -1,99 +1,58 @@
-<p align="center">
-  <a href="http://nestjs.com/" target="blank"><img src="https://nestjs.com/img/logo-small.svg" width="120" alt="Nest Logo" /></a>
-</p>
+NOTE: I was unsure whether or not the README had to be in English or not, just in case I am writing in English.
 
-[circleci-image]: https://img.shields.io/circleci/build/github/nestjs/nest/master?token=abc123def456
-[circleci-url]: https://circleci.com/gh/nestjs/nest
+Github Links (NOTE 2: Due to the nature of Render I uploaded them as seperate repositories):
 
-  <p align="center">A progressive <a href="http://nodejs.org" target="_blank">Node.js</a> framework for building efficient and scalable server-side applications.</p>
-    <p align="center">
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/v/@nestjs/core.svg" alt="NPM Version" /></a>
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/l/@nestjs/core.svg" alt="Package License" /></a>
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/dm/@nestjs/common.svg" alt="NPM Downloads" /></a>
-<a href="https://circleci.com/gh/nestjs/nest" target="_blank"><img src="https://img.shields.io/circleci/build/github/nestjs/nest/master" alt="CircleCI" /></a>
-<a href="https://coveralls.io/github/nestjs/nest?branch=master" target="_blank"><img src="https://coveralls.io/repos/github/nestjs/nest/badge.svg?branch=master#9" alt="Coverage" /></a>
-<a href="https://discord.gg/G7Qnnhy" target="_blank"><img src="https://img.shields.io/badge/discord-online-brightgreen.svg" alt="Discord"/></a>
-<a href="https://opencollective.com/nest#backer" target="_blank"><img src="https://opencollective.com/nest/backers/badge.svg" alt="Backers on Open Collective" /></a>
-<a href="https://opencollective.com/nest#sponsor" target="_blank"><img src="https://opencollective.com/nest/sponsors/badge.svg" alt="Sponsors on Open Collective" /></a>
-  <a href="https://paypal.me/kamilmysliwiec" target="_blank"><img src="https://img.shields.io/badge/Donate-PayPal-ff3f59.svg" alt="Donate us"/></a>
-    <a href="https://opencollective.com/nest#sponsor"  target="_blank"><img src="https://img.shields.io/badge/Support%20us-Open%20Collective-41B883.svg" alt="Support us"></a>
-  <a href="https://twitter.com/nestframework" target="_blank"><img src="https://img.shields.io/twitter/follow/nestframework.svg?style=social&label=Follow" alt="Follow us on Twitter"></a>
-</p>
-  <!--[![Backers on Open Collective](https://opencollective.com/nest/backers/badge.svg)](https://opencollective.com/nest#backer)
-  [![Sponsors on Open Collective](https://opencollective.com/nest/sponsors/badge.svg)](https://opencollective.com/nest#sponsor)-->
+https://github.com/merisir573/final-auth 
 
-## Description
+https://github.com/merisir573/final-doctor
 
-[Nest](https://github.com/nestjs/nest) framework TypeScript starter repository.
+https://github.com/merisir573/final-gateway 
 
-## Project setup
+https://github.com/merisir573/final-medicine (current one)
 
-```bash
-$ npm install
-```
+https://github.com/merisir573/final-pharmacy
 
-## Compile and run the project
+https://github.com/merisir573/final-frontend
 
-```bash
-# development
-$ npm run start
+Deployed Links (NOTE 3: Due to the nature of the Free Tier on Render, the longer a service remains deployed the slower it becomes, as such trying to use the services may result in a 1-2 minute delay, rest assured the system is working it is just taking a while.)
 
-# watch mode
-$ npm run start:dev
+https://finals-frontend-tc7g.onrender.com/ (NOTE 4: You will have to click on one of the pages on the top left.)
 
-# production mode
-$ npm run start:prod
-```
+https://finals-auth.onrender.com
 
-## Run tests
+https://finals-doctor.onrender.com
 
-```bash
-# unit tests
-$ npm run test
+https://finals-gateway.onrender.com
 
-# e2e tests
-$ npm run test:e2e
+https://finals-medicine.onrender.com
 
-# test coverage
-$ npm run test:cov
-```
+https://finals-pharmacy.onrender.com
 
-## Deployment
+Video Link:
 
-When you're ready to deploy your NestJS application to production, there are some key steps you can take to ensure it runs as efficiently as possible. Check out the [deployment documentation](https://docs.nestjs.com/deployment) for more information.
+https://youtu.be/cOBk9qv27sI (NOTE 5: The video is send only, if it doesn't work, please send an E-Mail so I can change it to public)
 
-If you are looking for a cloud-based platform to deploy your NestJS application, check out [Mau](https://mau.nestjs.com), our official platform for deploying NestJS applications on AWS. Mau makes deployment straightforward and fast, requiring just a few simple steps:
+---My Design---
+For the most part the designs are pretty straightforward.
 
-```bash
-$ npm install -g mau
-$ mau deploy
-```
+Gateway: Checks the route and redirects accordingly.
 
-With Mau, you can deploy your application in just a few clicks, allowing you to focus on building features rather than managing infrastructure.
+Doctor: Takes the presented data and queues it using RabbitMQ. Requires authentication which is passed through the header with the key "Authentication" (NOTE: I accidentally say Authorization in the video) and the value "Bearer [ACCESSKEY]"
 
-## Resources
+Pharmacy: Takes the presented data, checks to see if any message in the queue matches it and if so, removes from the queue. Requires authentication which is passed through the header with the key "Authentication" and the value "Bearer [ACCESSKEY]"
 
-Check out a few resources that may come in handy when working with NestJS:
+Medicine: On initialization scrapes the topmost excel found in https://www.titck.gov.tr/dinamikmodul/43 and saves the name and status of the rows into MongoDB, a NoSQL database, which is then searched whenever a query is passed in. It also has pagination with each page showing 10 medication. The database gets updated every Sunday at 22:00 using a Cron Job defined in Github, it is viewable in the actions section of this repo.
 
-- Visit the [NestJS Documentation](https://docs.nestjs.com) to learn more about the framework.
-- For questions and support, please visit our [Discord channel](https://discord.gg/G7Qnnhy).
-- To dive deeper and get more hands-on experience, check out our official video [courses](https://courses.nestjs.com/).
-- Deploy your application to AWS with the help of [NestJS Mau](https://mau.nestjs.com) in just a few clicks.
-- Visualize your application graph and interact with the NestJS application in real-time using [NestJS Devtools](https://devtools.nestjs.com).
-- Need help with your project (part-time to full-time)? Check out our official [enterprise support](https://enterprise.nestjs.com).
-- To stay in the loop and get updates, follow us on [X](https://x.com/nestframework) and [LinkedIn](https://linkedin.com/company/nestjs).
-- Looking for a job, or have a job to offer? Check out our official [Jobs board](https://jobs.nestjs.com).
+Auth: Uses JWT, the strategy it uses is to get "Bearer" +  [ACCESSKEY] which is generated upon a successful login. Keeps a repo of users which get registered upon a successful register. Uses username and password as its two values.
 
-## Support
+Frontend: Uses Tailwind for the CSS and Vite for the site. Uses textboxes for data which is jsonified and then upon a button press directs that data using via the gateway. Upon a successful login the access key is kept so as to be passed into the gateway's header whenever needed.
 
-Nest is an MIT-licensed open source project. It can grow thanks to the sponsors and support by the amazing backers. If you'd like to join them, please [read more here](https://docs.nestjs.com/support).
+---Assumptions Made---
 
-## Stay in touch
+One assumption and design choice I made was to depricate the need for a prescription service, instead spreading it into doctor and pharmacy, from what I can tell this does not cause any issues as both are connected to the same RabbitMQ server.
 
-- Author - [Kamil Myśliwiec](https://twitter.com/kammysliwiec)
-- Website - [https://nestjs.com](https://nestjs.com/)
-- Twitter - [@nestframework](https://twitter.com/nestframework)
+---Issues I Encountered---
 
-## License
+The biggest issue I encountered was the difficulty of deploying to Render, I had to change the way my gateway was coded in order to fix the issue. Another issue was that the authentication header was not being passed correctly, I did have a way to fix this but said fix became unnecessary when I switched over to the new gateway system.
 
-Nest is [MIT licensed](https://github.com/nestjs/nest/blob/master/LICENSE).
+Aside from that I do not know how to implement mock APIs or notifications and as such I could not implement them.
