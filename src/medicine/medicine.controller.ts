@@ -5,11 +5,10 @@ import { MedicineService } from './medicine.service';
 export class MedicineController {
   constructor(private readonly medicineService: MedicineService) {}
 
-  // Endpoint for searching medicines by name with pagination
   @Get('search')
   searchMedicine(
     @Query('name') name: string,
-    @Query('page') page: number = 1,  // Default to page 1
+    @Query('page') page: number = 1, 
   ) {
     if (!name) {
       return { status: 'Error', message: 'Query parameter "name" is required' };
@@ -18,7 +17,6 @@ export class MedicineController {
   }
   
 
-  // Endpoint for updating the medicine list
   @Get('update')
   async updateMedicineList() {
     try {
